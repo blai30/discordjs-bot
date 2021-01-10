@@ -12,7 +12,7 @@ module.exports = async (client) => {
   await client.logger.info(`Version ${version} of the bot loaded.`);
   await client.logger.info(`Running in ${versions[process.env.NODE_ENV]} environment.`);
 
-  const helpCommand = client.commands.get('help').name;
+  const helpCommand = client.commands.get('help').info.name;
 
   // Display help command in as user status.
   await client.user.setStatus('online');

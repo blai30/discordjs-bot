@@ -28,9 +28,9 @@ const init = async () => {
 
         // Add commands and their aliases to the collections.
         // Set new item in collection with command name as key and exported module as value.
-        client.commands.set(command.name, command);
-        command.aliases.forEach((alias) => {
-          client.aliases.set(alias, command.name);
+        client.commands.set(command.info.name, command);
+        command.info.aliases.forEach((alias) => {
+          client.aliases.set(alias, command.info.name);
         });
         client.logger.info(`Loaded command: "${file}".`);
       } catch (err) {
