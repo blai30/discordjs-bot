@@ -15,7 +15,11 @@ module.exports = async (client) => {
   const helpCommand = client.commands.get('help').info.name;
 
   // Display help command in as user status.
-  await client.user.setStatus('online');
-  client.user.setActivity(`${config.prefix + helpCommand}`, { type: 'PLAYING' })
-    .catch((err) => client.logger.error(err));
+  await client.user.setPresence({
+    status: 'online',
+    activity: {
+      name: `${config.prefix + helpCommand}`,
+      type: 'PLAYING',
+    },
+  }).catch((err) => client.logger.error(err));
 };
