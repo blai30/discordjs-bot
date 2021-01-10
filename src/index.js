@@ -38,7 +38,7 @@ const init = async () => {
         client.logger.error(`${err}`);
       }
     });
-  client.logger.log('debug', `Loaded a total of ${commandFiles.length} commands.`);
+  client.logger.info(`Loaded a total of ${commandFiles.length} commands.`);
 
   // Load events.
   const eventFiles = await fs.readdir(`${__dirname}/events`);
@@ -52,7 +52,7 @@ const init = async () => {
       client.on(eventName, event.bind(null, client));
       client.logger.info(`Loaded event: "${eventName}".`);
     });
-  client.logger.debug(`Loaded a total of ${eventFiles.length} events.`);
+  client.logger.info(`Loaded a total of ${eventFiles.length} events.`);
 
   // Login to discord client.
   client.login(token);
