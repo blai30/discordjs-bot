@@ -8,20 +8,20 @@ const logFormat = winston.format.combine(
     level,
     message,
     timestamp,
-  }) => `${timestamp} [${level.toUpperCase()}]: ${message}`),
+  }) => `${timestamp} [${level}] ${message}`),
 );
 
 const logger = winston.createLogger({
   transports: [
     // Errors logged to file.
-    new winston.transports.File({
-      filename: 'error.log',
-      level: 'error',
-      format: winston.format.combine(
-        winston.format.json(),
-        logFormat,
-      ),
-    }),
+    // new winston.transports.File({
+    //   filename: 'error.log',
+    //   level: 'error',
+    //   format: winston.format.combine(
+    //     winston.format.align(),
+    //     logFormat,
+    //   ),
+    // }),
     // Http warning logs.
     new winston.transports.Http({
       level: 'warn',
@@ -34,7 +34,7 @@ const logger = winston.createLogger({
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
-        winston.format.json(),
+        winston.format.align(),
         logFormat,
       ),
     }),
