@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/index.js",
-    "development": "SET NODE_ENV=development&&nodemon ./src/index.js",
-    "production": "NODE_ENV=production&&npm start"
+    "dev": "SET NODE_ENV=development&&nodemon ./src/index.js",
+    "prod": "NODE_ENV=production&&npm start"
   },
   "author": "",
   "license": "ISC",
