@@ -5,11 +5,17 @@
         "node": true
     },
     "extends": [
-        "eslint:recommended",
-        "airbnb-base"
+        "eslint-config-airbnb",
+        "airbnb-typescript/base",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "plugins": [
+        "@typescript-eslint"
     ],
     "parserOptions": {
-        "ecmaVersion": 12
+        "ecmaVersion": 12,
+        "project": "./tsconfig.json"
     },
     "rules": {
         "global-require": "off",

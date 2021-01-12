@@ -1,0 +1,35 @@
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+
+  "compileOnSave": false,
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2020",
+    "baseUrl": "./",
+    "outDir": "dist",
+    "moduleResolution": "Node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "strictNullChecks": false
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

@@ -14,8 +14,8 @@ client.logger = require('./utils/logger');
 const init = async () => {
   // Load bot commands.
   const commandFiles = await fs.readdir(`${__dirname}/commands`);
-  const commandScripts = commandFiles.filter((file) => file.endsWith('.js'));
-  commandScripts
+  const commandObjects = commandFiles.filter((file) => file.endsWith('.js'));
+  commandObjects
     .forEach((file) => {
       try {
         // Load command module.
@@ -38,12 +38,12 @@ const init = async () => {
         client.logger.error(`${err}`);
       }
     });
-  client.logger.info(`Loaded a total of ${commandScripts.length} commands.`);
+  client.logger.info(`Loaded a total of ${commandObjects.length} commands.`);
 
   // Load client events.
   const eventFiles = await fs.readdir(`${__dirname}/events`);
-  const eventScripts = eventFiles.filter((file) => file.endsWith('.js'));
-  eventScripts
+  const eventObjects = eventFiles.filter((file) => file.endsWith('.js'));
+  eventObjects
     .forEach((file) => {
       // Use file name as event name.
       const eventName = file.split('.')[0];
@@ -52,7 +52,7 @@ const init = async () => {
       client.on(eventName, event.bind(null, client));
       client.logger.info(`Loaded event: "${eventName}".`);
     });
-  client.logger.info(`Loaded a total of ${eventScripts.length} events.`);
+  client.logger.info(`Loaded a total of ${eventObjects.length} events.`);
 
   // Login to discord client.
   await client.login(token);
