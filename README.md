@@ -1,3 +1,3 @@
 # discordjs-bot
 
-Discord bot using Discord.JS
+Discord bot using Discord.JS and TypeScript.

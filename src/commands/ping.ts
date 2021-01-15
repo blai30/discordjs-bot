@@ -1,14 +1,12 @@
 import { Message } from 'discord.js';
 
-export const name = 'ping';
+export const aliases = ['ping'];
 
 export const description = 'View the latency of the bot and API.';
 
 export const category = 'info';
 
-export const aliases = [];
-
-export const usage = 'ping';
+export const usage = aliases[0];
 
 export const execute = async (message: Message): Promise<Message> => {
   const reply = await message.channel.send('Ping?');

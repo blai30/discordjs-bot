@@ -1,6 +1,6 @@
-import { Client } from 'discord.js';
+import { Client as discordClient } from 'discord.js';
 import * as fs from 'fs';
-import { Command } from './commands';
+import { Command } from './command';
 import { logger } from '../utils/logger';
 
 enum PrivilegedIntents {
@@ -11,7 +11,7 @@ enum PrivilegedIntents {
 /**
  * Extended class from discord.js Client with additional methods and default constructor.
  */
-export default class extends Client {
+export class Client extends discordClient {
   constructor() {
     super({
       partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
@@ -31,29 +31,22 @@ export default class extends Client {
    * @param path The path to the command modules directory.
    */
   async loadCommands(path: string): Promise<void> {
-    return new Promise<void>(((resolve, reject) => {
-      fs.readdir(path, (err, files) => {
-        if (err) {
-          return reject(err);
-        }
+    return fs.promises.readdir(path).then((files) => {
+      const commandFiles = files.filter((file) => file.endsWith('.js'));
 
-        const commandFiles = files.filter((file) => file.endsWith('.js'));
+      commandFiles.map(async (file) => {
+        // Load command module.
+        const command = await import(`${path}/${file}`) as Command;
 
-        commandFiles.forEach(async (file) => {
-          // Load command module.
-          const command = await import(`${path}/${file}`) as Command;
-
-          // Add commands and their aliases to the collections.
-          // Set new item in collection with command name as key and exported module as value.
-          this.commands.set(command.name, command);
-          if (command.aliases) {
-            command.aliases.forEach((alias: string) => this.aliases.set(alias, command.name));
-          }
-          logger.info(`Loaded command: "${file}" with ${!command.aliases ? 0 : command.aliases.length} aliases.`);
+        // Add commands and their aliases to the collection.
+        command.aliases.forEach((alias: string) => {
+          this.commands.set(alias, command);
         });
-      });
 
-      return resolve();
-    }));
+        logger.info(`Loaded command: "${file}" with ${!command.aliases ? 0 : command.aliases.length} aliases.`);
+      })
+
+      logger.info(`Loaded a total of ${commandFiles.length} commands.`);
+    });
   }
 }

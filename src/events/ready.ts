@@ -1,9 +1,9 @@
 import { Client } from 'discord.js';
-import * as config from '../config';
+import { config } from '../config';
 import { logger } from '../utils/logger';
 
 export const ready = async (client: Client): Promise<void> => {
-  if (client.user == null) {
+  if (client.user === undefined) {
     return;
   }
 
@@ -12,11 +12,11 @@ export const ready = async (client: Client): Promise<void> => {
   logger.info(`Running in ${config.environment} environment.`);
 
   // Display help command in as user status.
-  client.user.setPresence({
+  await client.user.setPresence({
     status: 'online',
     activity: {
       name: `@${client.user.username} help`,
       type: 'PLAYING',
     },
-  }).catch((err) => logger.error(err));
+  }).catch((error) => logger.error(error));
 };

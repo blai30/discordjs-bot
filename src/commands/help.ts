@@ -1,16 +1,14 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { embedColor } from '../config';
+import { config } from '../config';
 import { logger } from '../utils/logger';
 
-export const name = 'help';
+export const aliases = ['help', 'h', 'halp'];
 
 export const description = 'View all commands.';
 
 export const category = 'info';
 
-export const aliases = ['h', 'halp'];
-
-export const usage = 'help';
+export const usage = aliases[0];
 
 export const execute = async (message: Message, args: string[]): Promise<Message> => {
   logger.info(args);
@@ -19,9 +17,9 @@ export const execute = async (message: Message, args: string[]): Promise<Message
 
   // Create the message embed for help.
   const embed = new MessageEmbed()
-    .setColor(embedColor)
+    .setColor(config.embedColor)
     .setTitle('Help information')
-    .setDescription(`View help information for ${message.client.user}.\nEnter \`${name} <command>\` for command info.`)
+    .setDescription(`View help information for ${message.client.user}.\nEnter \`@${message.client.user.username} ${usage} <command>\` for command info.`)
     .addFields(
       {
         name: 'Executing commands',

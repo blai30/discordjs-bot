@@ -1,8 +1,7 @@
-import { Command } from '../structures/commands';
+import { Command } from '../structures/command';
 
 declare module 'discord.js' {
   interface Client {
     commands: Collection<string, Command>;
-    aliases: Collection<string, string>;
   }
 }

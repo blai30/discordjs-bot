@@ -1,9 +1,9 @@
 import { Collection } from 'discord.js';
-import Client from './structures/client';
-import * as config from './config';
-import { commandHandler } from './events/commandHandler';
+import { config } from './config';
+import { Client } from './structures/client';
+import { commandHandler } from './events/message/command-handler';
 import { ready } from './events/ready';
-import { Command } from './structures/commands';
+import { Command } from './structures/command';
 
 (async () => {
   // Create new client object.
@@ -11,7 +11,6 @@ import { Command } from './structures/commands';
 
   // Initialize collections.
   client.commands = new Collection<string, Command>();
-  client.aliases = new Collection<string, string>();
 
   // Load command modules into collection.
   await client.loadCommands(config.paths.commands);
@@ -24,5 +23,6 @@ import { Command } from './structures/commands';
 
   // Log into the discord client using bot token.
   await client.login(config.token);
-})();
-
+})().catch((error) => {
+  throw error;
+});

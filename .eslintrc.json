@@ -2,15 +2,15 @@
   "env": {
     "browser": false,
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:jest/recommended",
-    "prettier",
-    "prettier/@typescript-eslint"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:eslint-comments/recommended",
+    "plugin:jest/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -19,7 +19,10 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "jest"
+    "eslint-comments",
+    "jest",
+    "promise",
+    "unicorn"
   ],
   "rules": {
   }
