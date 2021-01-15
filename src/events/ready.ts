@@ -1,19 +1,22 @@
-import BotClient from '../structures/BotClient';
-import { prefix, environment } from '../config';
+import { Client } from 'discord.js';
+import * as config from '../config';
+import { logger } from '../utils/logger';
 
-module.exports = async (client: BotClient) => {
+export const ready = async (client: Client): Promise<void> => {
+  if (client.user == null) {
+    return;
+  }
+
   // Present startup information.
-  client.logger.info(`Client logged in as ${client.user.tag} (${client.user.id}) in ${client.guilds.cache.size} server(s).`);
-  client.logger.info(`Running in ${environment} environment.`);
-
-  const helpCommand = client.commands.get('help').name;
+  logger.info(`Client logged in as ${client.user.tag} (${client.user.id}) in ${client.guilds.cache.size} server(s).`);
+  logger.info(`Running in ${config.environment} environment.`);
 
   // Display help command in as user status.
-  await client.user.setPresence({
+  client.user.setPresence({
     status: 'online',
     activity: {
-      name: `${prefix}${helpCommand}`,
+      name: `@${client.user.username} help`,
       type: 'PLAYING',
     },
-  }).catch((err) => client.logger.error(err));
+  }).catch((err) => logger.error(err));
 };

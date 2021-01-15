@@ -7,7 +7,7 @@ const logFormat = format.combine(
   format.printf((info) => `${info.timestamp} [${info.level}] ${info.message}`),
 );
 
-const logger = createLogger({
+export const logger = createLogger({
   transports: [
     // Errors logged to file.
     new transports.File({
@@ -37,5 +37,3 @@ const logger = createLogger({
     }),
   ],
 });
-
-export default logger;

@@ -1,18 +1,24 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
-
   "compileOnSave": false,
   "compilerOptions": {
+    "target": "ES6",
     "module": "CommonJS",
-    "target": "ES2020",
-    "baseUrl": "./",
-    "outDir": "dist",
     "moduleResolution": "Node",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "outDir": "dist",
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
     "importHelpers": true,
+    "jsx": "react",
+    "alwaysStrict": true,
+    "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "strictNullChecks": false,
     "lib": [
       "es6",
       "dom"
@@ -21,12 +27,13 @@
       "node"
     ],
     "typeRoots": [
-      "node_modules/@types"
-    ],
-    "strictNullChecks": false
+      "node_modules/@types",
+      "./src/@types"
+    ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "__tests__/**/*"
   ],
   "exclude": [
     "node_modules",

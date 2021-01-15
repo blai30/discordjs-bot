@@ -1,11 +1,28 @@
-require('dotenv').config();
+import { Collection } from 'discord.js';
+import Client from './structures/client';
+import * as config from './config';
+import { commandHandler } from './events/commandHandler';
+import { ready } from './events/ready';
+import { Command } from './structures/commands';
 
-import BotClient from './structures/BotClient';
-import { paths, token } from './config';
+(async () => {
+  // Create new client object.
+  const client = new Client();
 
-const client = new BotClient({});
+  // Initialize collections.
+  client.commands = new Collection<string, Command>();
+  client.aliases = new Collection<string, string>();
 
-client.loadCommands(paths.commands);
-client.loadEvents(paths.events);
+  // Load command modules into collection.
+  await client.loadCommands(config.paths.commands);
 
-client.login(token);
+  // Register ready socket event.
+  client.once('ready', () => ready(client));
+
+  // Register command handler for message socket event.
+  client.on('message', (message) => commandHandler(message));
+
+  // Log into the discord client using bot token.
+  await client.login(config.token);
+})();
+
