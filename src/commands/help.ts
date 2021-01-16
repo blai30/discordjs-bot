@@ -1,30 +1,34 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { config } from '../config';
+import { Command, commandList } from './index';
+import { embedColor } from '../config';
 import { logger } from '../utils/logger';
 
-export const aliases = ['help', 'h', 'halp'];
+const aliases = ['help', 'h', 'halp'];
 
-export const description = 'View all commands.';
+const description = 'View all commands.';
 
-export const category = 'info';
+const category = 'info';
 
-export const usage = aliases[0];
+const usage = aliases[0];
 
-export const execute = async (message: Message, args: string[]): Promise<Message> => {
+const execute = async (message: Message, args: string[]): Promise<Message> => {
   logger.info(args);
 
-  const botCommands = message.client.commands.map((command) => `\`${command.usage}\``);
+  // Get array of available commands using first alias.
+  const botCommands = commandList.map((command) => `\`${command.aliases[0]}\``);
+  const clientUser = message.client.user;
+  console.log(botCommands);
 
   // Create the message embed for help.
   const embed = new MessageEmbed()
-    .setColor(config.embedColor)
+    .setColor(embedColor)
     .setTitle('Help information')
-    .setDescription(`View help information for ${message.client.user}.\nEnter \`@${message.client.user.username} ${usage} <command>\` for command info.`)
+    .setDescription(`View help information for ${clientUser.toString()}.\nEnter \`@${clientUser.username} ${aliases[0]} <command>\` for command info.`)
     .addFields(
       {
         name: 'Executing commands',
-        value: `Mention ${message.client.user} followed by the command.
-        \`eg. @${message.client.user.username} help\``,
+        value: `Mention ${clientUser.toString()} followed by the command.
+      \`eg. @${message.client.user.username} help\``,
       },
       {
         name: 'Available commands',
@@ -39,3 +43,11 @@ export const execute = async (message: Message, args: string[]): Promise<Message
 
   return message.channel.send(embed);
 };
+
+export const help: Command = {
+  aliases: aliases,
+  description: description,
+  category: category,
+  usage: usage,
+  execute: execute,
+}

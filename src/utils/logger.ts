@@ -4,6 +4,7 @@ const logFormat = format.combine(
   format.timestamp({
     format: 'YYYY-MM-DD HH:mm:ss',
   }),
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   format.printf((info) => `${info.timestamp} [${info.level}] ${info.message}`),
 );
 

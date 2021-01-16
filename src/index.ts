@@ -1,19 +1,26 @@
-import { Collection } from 'discord.js';
-import { config } from './config';
-import { Client } from './structures/client';
-import { commandHandler } from './events/message/command-handler';
+import { Client } from 'discord.js';
+import { token } from './config';
 import { ready } from './events/ready';
-import { Command } from './structures/command';
+import { commandHandler } from './events/message/commandHandler';
+
+enum PrivilegedIntents {
+  GUILD_PRESENCES = 'GUILD_PRESENCES',
+  GUILD_MEMBERS = 'GUILD_MEMBERS',
+}
 
 (async () => {
   // Create new client object.
-  const client = new Client();
-
-  // Initialize collections.
-  client.commands = new Collection<string, Command>();
-
-  // Load command modules into collection.
-  await client.loadCommands(config.paths.commands);
+  const client = new Client({
+    partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+    ws: {
+      intents: [
+        'GUILDS',
+        'GUILD_MESSAGES',
+        'GUILD_MESSAGE_REACTIONS',
+        PrivilegedIntents.GUILD_MEMBERS,
+      ],
+    },
+  });
 
   // Register ready socket event.
   client.once('ready', () => ready(client));
@@ -22,7 +29,7 @@ import { Command } from './structures/command';
   client.on('message', (message) => commandHandler(message));
 
   // Log into the discord client using bot token.
-  await client.login(config.token);
+  await client.login(token);
 })().catch((error) => {
   throw error;
 });

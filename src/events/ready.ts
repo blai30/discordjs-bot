@@ -1,5 +1,5 @@
 import { Client } from 'discord.js';
-import { config } from '../config';
+import { environment } from '../config';
 import { logger } from '../utils/logger';
 
 export const ready = async (client: Client): Promise<void> => {
@@ -9,7 +9,7 @@ export const ready = async (client: Client): Promise<void> => {
 
   // Present startup information.
   logger.info(`Client logged in as ${client.user.tag} (${client.user.id}) in ${client.guilds.cache.size} server(s).`);
-  logger.info(`Running in ${config.environment} environment.`);
+  logger.info(`Running in ${environment} environment.`);
 
   // Display help command in as user status.
   await client.user.setPresence({
