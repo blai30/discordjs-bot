@@ -1,7 +1,6 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { Command, commandList } from './index';
 import { embedColor } from '../config';
-import { logger } from '../utils/logger';
 
 const aliases = ['help', 'h', 'halp'];
 
@@ -11,9 +10,7 @@ const category = 'info';
 
 const usage = aliases[0];
 
-const execute = async (message: Message, args: string[]): Promise<Message> => {
-  logger.info(args);
-
+const execute = async (message: Message): Promise<Message> => {
   // Get array of available commands using first alias.
   const botCommands = commandList.map((command) => `\`${command.aliases[0]}\``);
   const clientUser = message.client.user;
@@ -32,7 +29,7 @@ const execute = async (message: Message, args: string[]): Promise<Message> => {
       },
       {
         name: 'Available commands',
-        value: botCommands.join(', '),
+        value: botCommands.sort().join(', '),
       },
     );
 

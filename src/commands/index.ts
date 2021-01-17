@@ -15,5 +15,5 @@ export interface Command {
   description?: string,
   category?: string,
   usage?: string,
-  execute: (message: Message, args: string[]) => Promise<Message>;
+  execute: (message: Message, args?: string[]) => Promise<Message>;
 }
