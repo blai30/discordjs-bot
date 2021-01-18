@@ -14,7 +14,6 @@ const execute = async (message: Message): Promise<Message> => {
   // Get array of available commands using first alias.
   const botCommands = commandList.map((command) => `\`${command.aliases[0]}\``);
   const clientUser = message.client.user;
-  console.log(botCommands);
 
   // Create the message embed for help.
   const embed = new MessageEmbed()
@@ -42,9 +41,9 @@ const execute = async (message: Message): Promise<Message> => {
 };
 
 export const help: Command = {
-  aliases: aliases,
-  description: description,
-  category: category,
-  usage: usage,
-  execute: execute,
-}
+  aliases,
+  description,
+  category,
+  usage,
+  execute,
+};
