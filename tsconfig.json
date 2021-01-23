@@ -25,7 +25,9 @@
     ],
     "typeRoots": [
       "node_modules/@types",
-      "src/@types"
+      "node_modules/discord.js/typings",
+      "node_modules/discord.js-commando/typings",
+      "src/@types",
     ]
   },
   "include": [
@@ -34,6 +36,7 @@
   ],
   "exclude": [
     "node_modules",
+    "dist",
     "**/*.spec.ts"
   ]
 }

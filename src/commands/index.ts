@@ -1,16 +1,11 @@
-import { Command } from '../structures/command';
+import { Command } from 'discord.js-commando';
 
-import { avatar } from './avatar';
-// eslint-disable-next-line import/no-cycle
-import { help } from './help';
-import { ping } from './ping';
-import { serverInfo } from './serverInfo';
-import { userInfo } from './userInfo';
+import { AvatarCommand } from './util/avatar';
+import { ServerInfoCommand } from './info/serverInfo';
+import { UserInfoCommand } from './info/userInfo';
 
-export const commandList: Command[] = [
-  avatar,
-  help,
-  ping,
-  serverInfo,
-  userInfo,
+export const commandList: (typeof Command)[] = [
+  AvatarCommand,
+  ServerInfoCommand,
+  UserInfoCommand,
 ];
