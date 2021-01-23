@@ -1,5 +1,6 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { Command, commandList } from './index';
+import { commandList } from './index';
+import { Command } from '../structures/command';
 import { embedColor } from '../config';
 
 const aliases = ['help', 'h', 'halp'];
@@ -8,7 +9,7 @@ const description = 'View all commands.';
 
 const category = 'info';
 
-const usage = aliases[0];
+const usage = `${aliases[0]} [command]`;
 
 const execute = async (message: Message): Promise<Message> => {
   // Get array of available commands using first alias.
@@ -16,28 +17,29 @@ const execute = async (message: Message): Promise<Message> => {
   const clientUser = message.client.user;
 
   // Create the message embed for help.
-  const embed = new MessageEmbed()
-    .setColor(embedColor)
-    .setTitle('Help information')
-    .setDescription(`View help information for ${clientUser.toString()}.\nEnter \`@${clientUser.username} ${aliases[0]} <command>\` for command info.`)
-    .addFields(
+  const embedOptions = {
+    title: 'Help information',
+    color: embedColor,
+    thumbnail: {
+      url: message.client.user.avatarURL({ dynamic: true }),
+    },
+    description: `View help information for ${clientUser.toString()}.
+                  Enter \`@${clientUser.username} ${aliases[0]} [command]\` for command info.`,
+    fields: [
       {
         name: 'Executing commands',
         value: `Mention ${clientUser.toString()} followed by the command.
-      \`eg. @${message.client.user.username} help\``,
+                \`@${message.client.user.username} [command]\`
+                \`eg. @${message.client.user.username} ping\``,
       },
       {
         name: 'Available commands',
         value: botCommands.sort().join(', '),
       },
-    );
+    ],
+  };
 
-  const avatar = message.client.user.avatarURL();
-  if (avatar) {
-    embed.setThumbnail(avatar);
-  }
-
-  return message.channel.send(embed);
+  return message.channel.send(new MessageEmbed(embedOptions));
 };
 
 export const help: Command = {

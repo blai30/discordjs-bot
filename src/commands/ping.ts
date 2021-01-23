@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../structures/command';
 
 const aliases = ['ping'];
 

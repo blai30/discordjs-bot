@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../structures/command';
 import { embedColor } from '../config';
 
 const aliases = ['userinfo'];
@@ -8,7 +8,7 @@ const description = 'Display user info.';
 
 const category = 'info';
 
-const usage = `${aliases[0]} <@user>`;
+const usage = `${aliases[0]} [@user]`;
 
 const execute = async (message: Message): Promise<Message> => {
   const avatarURL = message.author.avatarURL({ dynamic: true });

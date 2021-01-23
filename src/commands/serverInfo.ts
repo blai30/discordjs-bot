@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../structures/command';
 import { embedColor } from '../config';
 
 const aliases = ['serverinfo'];

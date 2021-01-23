@@ -21,7 +21,7 @@ export const commandHandler = async (message: Message): Promise<void> => {
 
   // Identify command by alias.
   // const command = message.client.commands.get(commandAlias);
-  const command = commandList.find(({aliases}) => aliases.find((alias) => alias === commandAlias));
+  const command = commandList.find(({ aliases }) => aliases.find((alias) => alias === commandAlias));
 
   // Not a valid command.
   if (!command) {
