@@ -2,7 +2,7 @@ import { Message, MessageEmbed } from 'discord.js';
 import { Command } from './index';
 import { embedColor } from '../config';
 
-const aliases = ['server-info'];
+const aliases = ['serverinfo'];
 
 const description = 'Display server info.';
 

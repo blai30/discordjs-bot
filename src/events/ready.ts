@@ -1,6 +1,7 @@
 import { Client } from 'discord.js';
 import { environment } from '../config';
 import { logger } from '../utils/logger';
+import { commandList } from '../commands';
 
 export const ready = async (client: Client): Promise<void> => {
   if (client.user === undefined) {
@@ -19,4 +20,8 @@ export const ready = async (client: Client): Promise<void> => {
       type: 'PLAYING',
     },
   }).catch((error) => logger.error(error));
+
+  // Print available commands to log.
+  const commandNames = commandList.map((command) => command.aliases[0]);
+  logger.info(`${commandList.length} commands available: ${commandNames.join(', ')}`);
 };
