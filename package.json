@@ -4,7 +4,8 @@
   "description": "Discord bot using Discord.JS and TypeScript.",
   "main": "dist/src/index.js",
   "scripts": {
-    "start": "tsc -p tsconfig.release.json && node dist/src/index.js",
+    "start": "node dist/src/index.js",
+    "start:watch": "nodemon dist/src/index.js",
     "build": "tsc -p tsconfig.release.json",
     "build:watch": "tsc -w -p tsconfig.release.json",
     "lint": "eslint . --ext .ts,.tsx",

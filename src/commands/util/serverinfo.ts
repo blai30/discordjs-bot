@@ -2,12 +2,12 @@ import { Message, MessageEmbed } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
 import { embedColor } from '../../config';
 
-class ServerInfoCommand extends Command {
+export class ServerInfoCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'serverinfo',
       aliases: ['serverinfo'],
-      group: 'info',
+      group: 'util',
       memberName: 'serverinfo',
       description: 'Display information about the server.',
     });
@@ -81,5 +81,3 @@ class ServerInfoCommand extends Command {
     return message.embed(new MessageEmbed(embedOptions));
   }
 }
-
-export { ServerInfoCommand };

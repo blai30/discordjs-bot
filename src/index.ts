@@ -1,8 +1,10 @@
 import { CommandoClient } from 'discord.js-commando';
-import { owner, prefix, token } from './config';
+import {
+  owner, prefix, token,
+} from './config';
+import { commandList } from './commands';
 import { ready } from './events/ready';
 import { logger } from './utils/logger';
-import { commandList } from './commands';
 
 enum PrivilegedIntents {
   GUILD_PRESENCES = 'GUILD_PRESENCES',
@@ -10,7 +12,6 @@ enum PrivilegedIntents {
 }
 
 const commandGroups = [
-  ['info', 'Informational commands'],
   ['util', 'Utility commands'],
 ];
 
@@ -33,23 +34,18 @@ const commandGroups = [
 
   client.registry
     .registerDefaultTypes()
-    .registerGroups(commandGroups)
     .registerDefaultGroups()
-    .registerDefaultCommands({
-      unknownCommand: false,
-      help: false,
-      ping: false,
-    })
+    .registerGroups(commandGroups)
     .registerCommands(commandList);
 
-  /* eslint-disable @typescript-eslint/no-misused-promises */
+  // Print available commands to log.
+  const commandNames = client.registry.commands.map((command) => command.name);
+  logger.info(`${commandNames.length} commands loaded: ${commandNames.join(', ')}.`);
 
   // Register ready socket event.
   client.once('ready', () => ready(client));
 
   client.on('error', logger.error);
-
-  /* eslint-enable @typescript-eslint/no-misused-promises */
 
   // Log into the discord client using bot token.
   await client.login(token);

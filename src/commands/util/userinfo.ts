@@ -1,52 +1,61 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { Message, MessageEmbed, User } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
 import { embedColor } from '../../config';
 
-class UserInfoCommand extends Command {
+export class UserInfoCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'userinfo',
       aliases: ['userinfo'],
-      group: 'info',
+      group: 'util',
       memberName: 'userinfo',
       description: 'Display information about the user or a mentioned user.',
+      args: [
+        {
+          key: 'mention',
+          prompt: 'Mention a user to view their information.',
+          type: 'user',
+          default: '',
+        },
+      ],
     });
 
     this.examples = [`${this.aliases[0]} [@user]`];
   }
 
-  public run(message: CommandoMessage): Promise<Message | Message[] | null> | null {
-    const avatarURL = message.author.avatarURL({ dynamic: true });
+  public run(message: CommandoMessage, { mention }: { mention: User }): Promise<Message> {
+    const user = mention || message.author;
+    const avatarURL = user.avatarURL({ dynamic: true });
 
     const embedOptions = {
       title: 'Icon direct link',
       url: avatarURL,
       author: {
-        name: message.author.username,
+        name: user.username,
         icon_url: avatarURL,
       },
-      description: `Full username: ${message.author.tag}`,
+      description: `Full username: ${user.tag}`,
       color: embedColor,
       thumbnail: {
         url: avatarURL,
       },
       footer: {
-        text: `Created: ${message.author.createdAt.toUTCString()}`,
+        text: `Created: ${user.createdAt.toUTCString()}`,
       },
       fields: [
         {
           name: 'ID',
-          value: message.author.id,
+          value: user.id,
           inline: true,
         },
         {
           name: 'Bot',
-          value: message.author.bot,
+          value: user.bot,
           inline: true,
         },
         {
           name: 'Presence',
-          value: message.author.presence.status,
+          value: user.presence.status,
           inline: true,
         },
       ],
@@ -55,5 +64,3 @@ class UserInfoCommand extends Command {
     return message.embed(new MessageEmbed(embedOptions));
   }
 }
-
-export { UserInfoCommand };
