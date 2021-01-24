@@ -3,11 +3,9 @@ import * as path from 'path';
 
 dotenv.config();
 
-export const token = process.env.DISCORD_TOKEN || 'unknown';
+export const token = process.env.DISCORD_TOKEN || 'undefined';
 
-export const owner = process.env.OWNER || 'unknown';
-
-export const prefix = process.env.BOT_PREFIX || '<@!547507928287019009> ';
+export const owner = process.env.OWNER || 'undefined';
 
 export const embedColor = process.env.DEFAULT_COLOR || 0x000000;
 
@@ -18,4 +16,4 @@ export const paths = {
   events: path.join(__dirname, 'events'),
 };
 
-export const environment = process.env.NODE_ENV || 'unknown';
+export const environment = process.env.NODE_ENV || 'undefined';
