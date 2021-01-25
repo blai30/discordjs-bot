@@ -22,6 +22,7 @@
     "discord.js": "^12.5.1",
     "discord.js-commando": "github:discordjs/Commando",
     "dotenv": "^8.2.0",
+    "node-fetch": "^3.0.0-beta.9",
     "tslib": "^2.1.0",
     "winston": "^3.3.3"
   },

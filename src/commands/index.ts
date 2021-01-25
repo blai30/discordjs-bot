@@ -5,6 +5,7 @@ import { FlipCoinCommand } from './fun/flipcoin';
 import { HelpCommand } from './general/help';
 import { PingCommand } from './general/ping';
 import { ServerInfoCommand } from './util/serverinfo';
+import { UrbanCommand } from './util/urban';
 import { UserInfoCommand } from './util/userinfo';
 
 export const commandList: (typeof Command)[] = [
@@ -13,5 +14,6 @@ export const commandList: (typeof Command)[] = [
   HelpCommand,
   PingCommand,
   ServerInfoCommand,
+  UrbanCommand,
   UserInfoCommand,
 ];
