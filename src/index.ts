@@ -1,5 +1,5 @@
 import { CommandoClient } from 'discord.js-commando';
-import { owner, token } from './config';
+import { owner, prefix, token } from './config';
 import { commandList } from './commands';
 import { ready } from './events/ready';
 import { logger } from './utils/logger';
@@ -28,8 +28,8 @@ const commandGroups = [
         PrivilegedIntents.GUILD_MEMBERS,
       ],
     },
-    // No prefix, use mention only.
-    commandPrefix: null,
+    // Will be null. No prefix, use mention only.
+    commandPrefix: prefix,
     owner,
   });
 

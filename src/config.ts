@@ -5,6 +5,8 @@ dotenv.config();
 
 export const token = process.env.DISCORD_TOKEN || 'undefined';
 
+export const prefix = process.env.BOT_PREFIX || null;
+
 export const owner = process.env.OWNER || 'undefined';
 
 export const embedColor = process.env.DEFAULT_COLOR || 0x000000;
