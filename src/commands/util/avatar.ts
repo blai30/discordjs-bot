@@ -25,9 +25,10 @@ export class AvatarCommand extends Command {
     this.examples = [`${this.aliases[0]} [@user]`];
   }
 
-  public run(message: CommandoMessage, { mention }: { mention: User }): Promise<Message> {
+  public async run(message: CommandoMessage, { mention }: { mention: User }): Promise<Message> {
     const user = mention || message.author;
 
+    // Full size avatar including animated avatar.
     const avatar = user.avatarURL({
       dynamic: true,
       size: 4096,

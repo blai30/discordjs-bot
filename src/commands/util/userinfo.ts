@@ -20,7 +20,9 @@ export class UserInfoCommand extends Command {
       ],
     });
 
-    this.examples = [`${this.aliases[0]} [@user]`];
+    this.examples = [
+      `${this.aliases[0]} [@user]`,
+    ];
   }
 
   public run(message: CommandoMessage, { mention }: { mention: User }): Promise<Message> {

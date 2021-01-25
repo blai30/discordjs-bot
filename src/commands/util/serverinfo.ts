@@ -12,10 +12,12 @@ export class ServerInfoCommand extends Command {
       description: 'Display information about the server.',
     });
 
-    this.examples = [`${this.aliases[0]}`];
+    this.examples = [
+      `${this.aliases[0]}`,
+    ];
   }
 
-  public run(message: CommandoMessage): Promise<Message | Message[] | null> | null {
+  public async run(message: CommandoMessage): Promise<Message | Message[] | null> | null {
     const channels = message.guild.channels.cache;
     const emojis = message.guild.emojis.cache;
     const roles = message.guild.roles.cache;

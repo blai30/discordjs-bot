@@ -10,7 +10,7 @@ enum PrivilegedIntents {
 }
 
 const commandGroups = [
-  ['util', 'Utility commands'],
+  ['util', 'Utility'],
 ];
 
 (async () => {
@@ -48,5 +48,6 @@ const commandGroups = [
   // Log into the discord client using bot token.
   await client.login(token);
 })().catch((error) => {
+  logger.error(error);
   throw error;
 });

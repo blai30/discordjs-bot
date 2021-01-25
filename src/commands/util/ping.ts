@@ -11,10 +11,12 @@ export class PingCommand extends Command {
       description: 'View the latency of the bot and API.',
     });
 
-    this.examples = [`${this.aliases[0]}`];
+    this.examples = [
+      `${this.aliases[0]}`,
+    ];
   }
 
-  public run(message: CommandoMessage): Promise<Message> {
+  public async run(message: CommandoMessage): Promise<Message> {
     const text = 'Pong! Latency: `... ms`. API: `... ms`.';
 
     return message.say(text).then((reply) => {

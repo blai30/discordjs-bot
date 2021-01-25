@@ -25,13 +25,15 @@ export class HelpCommand extends Command {
       ],
     });
 
-    this.examples = [`${this.aliases[0]} [command]`];
+    this.examples = [
+      `${this.aliases[0]} [command]`,
+    ];
   }
 
   public async run(message: CommandoMessage, { name }: { name: string }): Promise<Message> {
     const clientUser = this.client.user;
     const avatar = clientUser.avatarURL({ dynamic: true });
-    const commandGroups = this.client.registry.groups;
+    const commandGroups = this.client.registry.groups.sort();
 
     // Create the message embed for help.
     const embedOptions = {
@@ -43,14 +45,14 @@ export class HelpCommand extends Command {
 
     const embed = new MessageEmbed(embedOptions);
 
-    // No command name is provided from command arguments, display default help.
+    /**
+     * No command name is provided from command arguments, display default help.
+     */
     if (!name) {
       embed
         .setAuthor(clientUser.username, avatar)
-        .setDescription(
-          `View available commands for ${clientUser.toString()}.
-          Enter \`@${clientUser.username} ${this.aliases[0]} [command]\` for command help info.`
-        );
+        .setDescription(`View available commands for ${clientUser.toString()}.
+        Enter \`@${clientUser.username} ${this.aliases[0]} [command]\` for command help info.`);
 
       // List all available commands separated by command groups.
       commandGroups.forEach((group) => {
@@ -60,7 +62,7 @@ export class HelpCommand extends Command {
         }
 
         const groupCommandNames = group.commands.map((command) => `\`${command.name}\``);
-        embed.addField(group.id.toUpperCase(), groupCommandNames.join(', '));
+        embed.addField(group.name, groupCommandNames.join(', '));
       });
 
       embed.addField('Examples', `\`@${message.client.user.username} help avatar\` to view help for the avatar command.`);
@@ -69,7 +71,9 @@ export class HelpCommand extends Command {
       return message.embed(embed);
     }
 
-    // Display help info for command specified in arguments.
+    /**
+     * Display help info for command specified in arguments.
+     */
     const command = this.client.registry.commands.get(name);
     embed
       .setTitle(command.name)
