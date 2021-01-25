@@ -6,7 +6,7 @@ export class PingCommand extends Command {
     super(client, {
       name: 'ping',
       aliases: ['ping'],
-      group: 'util',
+      group: 'general',
       memberName: 'ping',
       description: 'View the latency of the bot and API.',
     });

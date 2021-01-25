@@ -1,8 +1,8 @@
 import { Command } from 'discord.js-commando';
 
 import { AvatarCommand } from './util/avatar';
-import { HelpCommand } from './util/help';
-import { PingCommand } from './util/ping';
+import { HelpCommand } from './general/help';
+import { PingCommand } from './general/ping';
 import { ServerInfoCommand } from './util/serverinfo';
 import { UserInfoCommand } from './util/userinfo';
 

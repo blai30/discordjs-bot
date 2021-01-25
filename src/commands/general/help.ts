@@ -12,7 +12,7 @@ export class HelpCommand extends Command {
     super(client, {
       name: 'help',
       aliases: ['help', 'h', 'halp'],
-      group: 'util',
+      group: 'general',
       memberName: 'help',
       description: 'View all commands or help info for a specific command.',
       args: [
@@ -33,7 +33,12 @@ export class HelpCommand extends Command {
   public async run(message: CommandoMessage, { name }: { name: string }): Promise<Message> {
     const clientUser = this.client.user;
     const avatar = clientUser.avatarURL({ dynamic: true });
-    const commandGroups = this.client.registry.groups.sort();
+    const commandGroups = this.client.registry.groups.sort((group1, group2) => {
+      // Sort command groups alphabetically by group id.
+      const id1 = group1.id.toUpperCase();
+      const id2 = group2.id.toUpperCase();
+      return id1.localeCompare(id2);
+    });
 
     // Create the message embed for help.
     const embedOptions = {

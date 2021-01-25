@@ -10,6 +10,7 @@ enum PrivilegedIntents {
 }
 
 const commandGroups = [
+  ['general', 'General'],
   ['util', 'Utility'],
 ];
 
