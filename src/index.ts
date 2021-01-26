@@ -4,28 +4,24 @@ import { commandList } from './commands';
 import { ready } from './events/ready';
 import { logger } from './utils/logger';
 
-enum PrivilegedIntents {
-  GUILD_PRESENCES = 'GUILD_PRESENCES',
-  GUILD_MEMBERS = 'GUILD_MEMBERS',
-}
-
 const commandGroups = [
   ['fun', 'Fun'],
   ['general', 'General'],
+  ['roles', 'Reaction Roles'],
   ['util', 'Utility'],
 ];
 
 (async () => {
   // Create new client object.
   const client = new CommandoClient({
-    partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+    partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER'],
     ws: {
       intents: [
         'GUILDS',
         'GUILD_MESSAGES',
         'GUILD_MESSAGE_REACTIONS',
-        PrivilegedIntents.GUILD_PRESENCES,
-        PrivilegedIntents.GUILD_MEMBERS,
+        'GUILD_PRESENCES',
+        'GUILD_MEMBERS',
       ],
     },
     // Will be null. No prefix, use mention only.
