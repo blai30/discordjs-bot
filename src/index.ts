@@ -3,11 +3,13 @@ import { owner, prefix, token } from './config';
 import { commandList } from './commands';
 import { ready } from './events/ready';
 import { logger } from './utils/logger';
+import * as db from './database/database';
 
 const commandGroups = [
   ['fun', 'Fun'],
   ['general', 'General'],
   ['roles', 'Reaction Roles'],
+  ['tags', 'Tags'],
   ['util', 'Utility'],
 ];
 
@@ -37,6 +39,8 @@ const commandGroups = [
   // Print available commands to log.
   const commandNames = client.registry.commands.map((command) => command.name);
   logger.info(`${commandNames.length} commands loaded: ${commandNames.join(', ')}.`);
+
+  await db.sync();
 
   // Register ready socket event.
   client.once('ready', () => ready(client));
