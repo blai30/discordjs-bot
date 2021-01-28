@@ -13,8 +13,8 @@ export class FetchTagCommand extends Command {
       args: [
         {
           key: 'tagName',
-          type: 'string',
           prompt: 'Provide a tag name to fetch.',
+          type: 'string',
         },
       ],
     });

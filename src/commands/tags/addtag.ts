@@ -13,13 +13,13 @@ export class AddTagCommand extends Command {
       args: [
         {
           key: 'tagName',
-          type: 'string',
           prompt: 'Provide tag name to add.',
+          type: 'string',
         },
         {
           key: 'tagDescription',
-          type: 'string',
           prompt: 'Provide a description.',
+          type: 'string',
         },
       ],
     });

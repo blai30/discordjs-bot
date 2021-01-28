@@ -13,8 +13,8 @@ export class TagInfoCommand extends Command {
       args: [
         {
           key: 'tagName',
-          type: 'string',
           prompt: 'Provide a tag name to display tag info.',
+          type: 'string',
         },
       ],
     });
