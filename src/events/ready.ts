@@ -2,7 +2,7 @@ import { Client } from 'discord.js-commando';
 import { environment } from '../config';
 import { logger } from '../utils/logger';
 
-export const ready = (client: Client): void => {
+export const ready = async (client: Client): Promise<void> => {
   if (client.user === undefined) {
     return;
   }
@@ -12,11 +12,11 @@ export const ready = (client: Client): void => {
   logger.info(`Running in ${environment} environment.`);
 
   // Display help command in as user status.
-  client.user.setPresence({
+  await client.user.setPresence({
     status: 'online',
     activity: {
       name: `@${client.user.username} help`,
       type: 'PLAYING',
     },
-  }).catch((error) => logger.error(error));
+  });
 };
