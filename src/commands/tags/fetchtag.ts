@@ -1,9 +1,9 @@
 import { Message } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
 import { getConnection } from 'typeorm';
-import { Tag } from '../../entity/tag';
+import { Tag } from '../../entity/Tag';
 
-export class FetchTagCommand extends Command {
+export default class FetchTagCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'fetchtag',
@@ -29,14 +29,13 @@ export class FetchTagCommand extends Command {
     message: CommandoMessage,
     { tagName }: { tagName: string },
   ): Promise<Message> {
-    // equivalent to: SELECT * FROM tags WHERE name = 'tagName' LIMIT 1;
+    // SELECT * FROM tags WHERE name = 'tagName' LIMIT 1;
     const tagRepository = getConnection().getRepository(Tag);
     const tag = await tagRepository.findOne({ where: { name: tagName } });
-    // const tag = await Tag.findOne({ where: { name: tagName } });
+    // UPDATE tags SET usage_count = usage_count + 1 WHERE name = 'tagName';
+    await tagRepository.increment({ name: tagName }, 'usage_count', 1);
+
     if (tag) {
-      // equivalent to: UPDATE tags SET usage_count = usage_count + 1 WHERE name = 'tagName';
-      await tagRepository.increment({ id: tag.id }, 'usage_count', 1);
-      // return message.channel.send(tag.get('description'));
       return message.channel.send(tag.description);
     }
 

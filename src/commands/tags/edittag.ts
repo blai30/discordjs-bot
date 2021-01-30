@@ -1,9 +1,9 @@
 import { Message } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
 import { getConnection } from 'typeorm';
-import { Tag } from '../../entity/tag';
+import { Tag } from '../../entity/Tag';
 
-export class EditTagCommand extends Command {
+export default class EditTagCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'edittag',
@@ -35,11 +35,7 @@ export class EditTagCommand extends Command {
     { tagName, tagDescription }: { tagName: string, tagDescription: string },
   ): Promise<Message> {
     const tagRepository = getConnection().getRepository(Tag);
-    // equivalent to: UPDATE tags (description) values (?) WHERE name='?';
-    // const affectedRows = await Tag.update(
-    //   { description: tagDescription },
-    //   { where: { name: tagName } },
-    // );
+    // UPDATE tags (description) values (?) WHERE name='?';
     const affectedRows = await tagRepository.update(
       { name: tagName },
       { description: tagDescription },

@@ -1,10 +1,9 @@
 import { CommandoClient } from 'discord.js-commando';
 import 'reflect-metadata';
-import { owner, prefix, token } from './config';
-import { commandList } from './commands';
+import { owner, paths, prefix, token } from './config';
 import { ready } from './events/ready';
 import { logger } from './utils/logger';
-import { db } from './database/database';
+import { initConnection } from './orm';
 
 const commandGroups = [
   ['fun', 'Fun'],
@@ -35,13 +34,18 @@ const commandGroups = [
   client.registry
     .registerDefaultTypes()
     .registerGroups(commandGroups)
-    .registerCommands(commandList);
+    .registerCommandsIn({
+      // Register .ts files for ts-node.
+      filter: /^([^.].*)\.(js|ts)?$/,
+      dirname: paths.commands,
+    });
 
   // Print available commands to log.
   const commandNames = client.registry.commands.map((command) => command.name);
   logger.info(`${commandNames.length} commands loaded: ${commandNames.join(', ')}.`);
 
-  await db;
+  // Initialize typeorm database connection.
+  await initConnection();
 
   // Register ready socket event.
   client.once('ready', () => ready(client));

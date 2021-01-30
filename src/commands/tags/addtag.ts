@@ -1,9 +1,9 @@
 import { Message } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
-import { Tag } from '../../entity/tag';
-import { db } from '../../database/database';
+import { getConnection } from 'typeorm';
+import { Tag } from '../../entity/Tag';
 
-export class AddTagCommand extends Command {
+export default class AddTagCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'addtag',
@@ -34,15 +34,14 @@ export class AddTagCommand extends Command {
     message: CommandoMessage,
     { tagName, tagDescription }: { tagName: string, tagDescription: string },
   ): Promise<Message> {
-    return db.then(async (connection) => {
-      // equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
-      const tag = new Tag();
-      tag.name = tagName;
-      tag.description = tagDescription;
-      tag.user_id = message.author.id;
-      await connection.manager.save(tag);
+    const tagRepository = getConnection().getRepository(Tag);
+    // INSERT INTO tags (name, description, username) values (?, ?, ?);
+    const tag = new Tag();
+    tag.name = tagName;
+    tag.description = tagDescription;
+    tag.user_id = message.author.id;
+    await tagRepository.save(tag);
 
-      return message.reply(`Tag ${tag.name} added.`);
-    }).catch((error) => message.reply(error));
+    return message.reply(`Tag ${tag.name} added.`);
   }
 }

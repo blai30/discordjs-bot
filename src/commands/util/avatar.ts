@@ -4,7 +4,7 @@ import {
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
 import { embedColor } from '../../config';
 
-export class AvatarCommand extends Command {
+export default class AvatarCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'avatar',

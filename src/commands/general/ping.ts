@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
 
-export class PingCommand extends Command {
+export default class PingCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'ping',

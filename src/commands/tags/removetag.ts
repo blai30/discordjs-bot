@@ -1,9 +1,9 @@
 import { Message } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
 import { getConnection } from 'typeorm';
-import { Tag } from '../../entity/tag';
+import { Tag } from '../../entity/Tag';
 
-export class RemoveTagCommand extends Command {
+export default class RemoveTagCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'removetag',
@@ -29,7 +29,7 @@ export class RemoveTagCommand extends Command {
     message: CommandoMessage,
     { tagName }: { tagName: string },
   ): Promise<Message> {
-    // equivalent to: DELETE from tags WHERE name = ?;
+    // DELETE from tags WHERE name = ?;
     const tagRepository = getConnection().getRepository(Tag);
     const rowCount = await tagRepository.delete({ name: tagName });
     if (!rowCount.affected) {

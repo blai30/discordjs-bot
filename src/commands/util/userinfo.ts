@@ -2,7 +2,7 @@ import { Message, MessageEmbed, User } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
 import { embedColor } from '../../config';
 
-export class UserInfoCommand extends Command {
+export default class UserInfoCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'userinfo',

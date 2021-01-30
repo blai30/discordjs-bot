@@ -6,7 +6,7 @@ import fetch from 'node-fetch';
 // Utility function for embed to not error when field value is over max characters.
 const trim = (str: string, max: number) => ((str.length > max) ? `${str.slice(0, max - 3)}...` : str);
 
-export class UrbanCommand extends Command {
+export default class UrbanCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'urban',

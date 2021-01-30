@@ -1,9 +1,9 @@
 import { Message } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
 import { getConnection } from 'typeorm';
-import { Tag } from '../../entity/tag';
+import { Tag } from '../../entity/Tag';
 
-export class ShowTagsCommand extends Command {
+export default class ShowTagsCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'showtags',
@@ -20,7 +20,7 @@ export class ShowTagsCommand extends Command {
 
   public async run(message: CommandoMessage): Promise<Message> {
     const tagRepository = getConnection().getRepository(Tag);
-    // equivalent to: SELECT name FROM tags;
+    // SELECT name FROM tags;
     const tagList = await tagRepository.find({ select: ['name'] });
     const tagString = tagList.map((tag) => tag.name).join(', ') || 'No tags set.';
     return message.channel.send(`List of tags: ${tagString}`);

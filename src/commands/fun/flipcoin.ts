@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
 
-export class FlipCoinCommand extends Command {
+export default class FlipCoinCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'flipcoin',

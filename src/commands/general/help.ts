@@ -7,7 +7,7 @@ const links = [
   `[Invite me](${inviteUrl})`,
 ];
 
-export class HelpCommand extends Command {
+export default class HelpCommand extends Command {
   constructor(client: Client) {
     super(client, {
       name: 'help',
