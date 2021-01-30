@@ -1,6 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "target": "ES2020",
     "module": "CommonJS",
     "moduleResolution": "Node",
@@ -27,7 +29,7 @@
       "node_modules/@types",
       "node_modules/discord.js/typings",
       "node_modules/discord.js-commando/typings",
-      "src/@types",
+      "src/@types"
     ]
   },
   "include": [
