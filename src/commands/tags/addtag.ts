@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
-import { Tag } from '../../models/tag';
+import { Tag } from '../../entity/tag';
+import { db } from '../../database/database';
 
 export class AddTagCommand extends Command {
   constructor(client: Client) {
@@ -33,20 +34,15 @@ export class AddTagCommand extends Command {
     message: CommandoMessage,
     { tagName, tagDescription }: { tagName: string, tagDescription: string },
   ): Promise<Message> {
-    try {
+    return db.then(async (connection) => {
       // equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
-      const tag = await Tag.create({
-        name: tagName,
-        description: tagDescription,
-        username: message.author.username,
-      });
+      const tag = new Tag();
+      tag.name = tagName;
+      tag.description = tagDescription;
+      tag.user_id = message.author.id;
+      await connection.manager.save(tag);
+
       return message.reply(`Tag ${tag.name} added.`);
-    } catch (e) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (e.name === 'SequelizeUniqueConstraintError') {
-        return message.reply('That tag already exists.');
-      }
-      return message.reply('Something went wrong with adding a tag.');
-    }
+    }).catch((error) => message.reply(error));
   }
 }

@@ -1,9 +1,10 @@
 import { CommandoClient } from 'discord.js-commando';
+import 'reflect-metadata';
 import { owner, prefix, token } from './config';
 import { commandList } from './commands';
 import { ready } from './events/ready';
 import { logger } from './utils/logger';
-import * as db from './database/database';
+import { db } from './database/database';
 
 const commandGroups = [
   ['fun', 'Fun'],
@@ -40,12 +41,17 @@ const commandGroups = [
   const commandNames = client.registry.commands.map((command) => command.name);
   logger.info(`${commandNames.length} commands loaded: ${commandNames.join(', ')}.`);
 
-  await db.sync();
+  await db;
 
   // Register ready socket event.
   client.once('ready', () => ready(client));
 
+  client.on('warn', logger.warn);
   client.on('error', logger.error);
+
+  client.on('disconnect', () => {
+    logger.warn('Reconnecting...');
+  });
 
   // Log into the discord client using bot token.
   await client.login(token);

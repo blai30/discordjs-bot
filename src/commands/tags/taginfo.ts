@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
-import { Tag } from '../../models/tag';
+import { getConnection } from 'typeorm';
+import { Tag } from '../../entity/tag';
 
 export class TagInfoCommand extends Command {
   constructor(client: Client) {
@@ -28,10 +29,11 @@ export class TagInfoCommand extends Command {
     message: CommandoMessage,
     { tagName }: { tagName: string },
   ): Promise<Message> {
+    const tagRepository = getConnection().getRepository(Tag);
     // equivalent to: SELECT * FROM tags WHERE name = 'tagName' LIMIT 1;
-    const tag = await Tag.findOne({ where: { name: tagName } });
+    const tag = await tagRepository.findOne({ where: { name: tagName } });
     if (tag) {
-      return message.channel.send(`${tagName} was created by ${tag.username} at ${tag.createdAt.toUTCString()} and has been used ${tag.usage_count} times.`);
+      return message.channel.send(`${tagName} was created by ${tag.user_id} at ${tag.createdAt.toUTCString()} and has been used ${tag.usage_count} times.`);
     }
 
     return message.reply(`Could not find tag: ${tagName}`);

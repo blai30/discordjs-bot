@@ -1,5 +1,17 @@
-import { Tag } from '../models/tag';
+import { createConnection } from 'typeorm';
+import { dbConfig } from '../config';
+import { Tag } from '../entity/tag';
 
-export const sync = async (): Promise<void> => {
-  await Tag.sync();
-};
+export const db = createConnection({
+  type: 'mysql',
+  host: dbConfig.host,
+  port: dbConfig.port,
+  username: dbConfig.username,
+  password: dbConfig.password,
+  database: dbConfig.database,
+  entities: [
+    Tag,
+  ],
+  synchronize: true,
+  logging: false,
+});

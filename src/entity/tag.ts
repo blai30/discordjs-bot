@@ -20,17 +20,17 @@ export class Tag {
   @PrimaryGeneratedColumn()
   public id: number;
 
+  @Column()
+  public name: string;
+
   @Column('text')
   public description: string;
 
   @Column()
-  public name: string;
+  public user_id: string;
 
-  @Column()
+  @Column({ default: 0 })
   public usage_count: number;
-
-  @Column()
-  public username: string;
 
   @CreateDateColumn()
   public createdAt?: Date;

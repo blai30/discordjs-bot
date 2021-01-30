@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import { Client, Command, CommandoMessage } from 'discord.js-commando';
-import { Tag } from '../../models/tag';
+import { getConnection } from 'typeorm';
+import { Tag } from '../../entity/tag';
 
 export class EditTagCommand extends Command {
   constructor(client: Client) {
@@ -33,14 +34,18 @@ export class EditTagCommand extends Command {
     message: CommandoMessage,
     { tagName, tagDescription }: { tagName: string, tagDescription: string },
   ): Promise<Message> {
+    const tagRepository = getConnection().getRepository(Tag);
     // equivalent to: UPDATE tags (description) values (?) WHERE name='?';
-    const affectedRows = await Tag.update(
+    // const affectedRows = await Tag.update(
+    //   { description: tagDescription },
+    //   { where: { name: tagName } },
+    // );
+    const affectedRows = await tagRepository.update(
+      { name: tagName },
       { description: tagDescription },
-      { where: { name: tagName } },
     );
 
-    // @ts-ignore
-    if (affectedRows > 0) {
+    if (affectedRows.affected > 0) {
       return message.reply(`Tag ${tagName} was edited.`);
     }
     return message.reply(`Could not find a tag with name ${tagName}.`);
