@@ -11,7 +11,8 @@
     "lint": "eslint . --ext .ts,.tsx",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "dev": "nodemon --exec ts-node --files src/index.ts"
+    "dev": "nodemon --exec ts-node --files src/index.ts",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
   "author": "Brian Lai <brianlai30@outlook.com>",
   "license": "ISC",

@@ -1,17 +1,16 @@
-import { createConnection } from 'typeorm';
-import { dbConfig } from '../config';
-import { Tag } from '../entity/tag';
+import { Connection, createConnection } from 'typeorm';
 
-export const db = createConnection({
-  type: 'mysql',
-  host: dbConfig.host,
-  port: dbConfig.port,
-  username: dbConfig.username,
-  password: dbConfig.password,
-  database: dbConfig.database,
-  entities: [
-    Tag,
-  ],
-  synchronize: true,
-  logging: false,
-});
+export const initConnection = (): Promise<Connection> => createConnection();
+// createConnection({
+//   type: 'mysql',
+//   host: dbConfig.host,
+//   port: dbConfig.port,
+//   username: dbConfig.username,
+//   password: dbConfig.password,
+//   database: dbConfig.database,
+//   synchronize: true,
+//   logging: false,
+//   entities: [
+//     Tag,
+//   ],
+// });
